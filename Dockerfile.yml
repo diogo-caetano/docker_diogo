@@ -1,0 +1,7 @@
+FROM ubuntu:yakkety
+RUN apt update && apt install -y curl locales && locale-gen en_US.UTF-8 && localedef -i en_GB -f UTF-8 en_US.UTF-8
+RUN curl https://install.meteor.com/ | sh
+RUN meteor create myapp --allow-superuser
+ENV LC_ALL=POSIX MONGO_URL=mongodb://localhost:27017/my_app
+RUN cd myapp && meteor npm install
+CMD cd myapp && meteor --allow-superuser
